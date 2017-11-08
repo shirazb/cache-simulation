@@ -1,6 +1,7 @@
 package sim;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class FIFOCache implements Cache {
@@ -8,8 +9,8 @@ public class FIFOCache implements Cache {
     private int indexToEvict = 0;
     private List<RequestEvent> cache;
 
-    public FIFOCache(int size) {
-        this.cache = new ArrayList<>(size);
+    FIFOCache(Collection<RequestEvent> initialCache) {
+        this.cache = new ArrayList<>(initialCache);
     }
 
     @Override
