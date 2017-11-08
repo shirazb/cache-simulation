@@ -9,7 +9,7 @@ public class FIFOCache implements Cache {
     private int indexToEvict = 0;
     private List<RequestEvent> cache;
 
-    FIFOCache(Collection<RequestEvent> initialCache) {
+    public FIFOCache(Collection<RequestEvent> initialCache) {
         this.cache = new ArrayList<>(initialCache);
     }
 

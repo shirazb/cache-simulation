@@ -9,18 +9,26 @@ public class RequestEvent implements Comparable<RequestEvent> {
     private Double time;
     private static Random rand = new Random();
 
-    public RequestEvent(int k, double time) {
-        this.itemNo = k;
-        this.time = time;
+    public RequestEvent(int itemNo) {
+        this.itemNo = itemNo;
+        this.time = getInterArrivalTime();
     }
 
-    public double getInterArrivalTime() {
+    private double getInterArrivalTime() {
         return Math.log(1-rand.nextDouble())/(-itemNo);
+    }
+
+    public void scheduleNewRequest() {
+        time += getInterArrivalTime();
     }
 
     // itemNo is also the rate parameter in the distribution
     public int getItemNo() {
         return itemNo;
+    }
+
+    public Double getTime() {
+        return time;
     }
 
     @Override
