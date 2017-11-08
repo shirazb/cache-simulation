@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class FIFOCacheTest {
     @Test
     void cacheIsInitialised() {
-        RequestEvent e1 = new RequestEvent(1, 0);
-        RequestEvent e2 = new RequestEvent(2, 0);
-        RequestEvent e3 = new RequestEvent(3, 0);
+        RequestEvent e1 = new RequestEvent(1);
+        RequestEvent e2 = new RequestEvent(2);
+        RequestEvent e3 = new RequestEvent(3);
 
         Collection<RequestEvent> events = Arrays.asList(e1, e2, e3);
         FIFOCache cache = new FIFOCache(events);
@@ -24,9 +24,9 @@ class FIFOCacheTest {
 
     @Test
     void cacheIsInitialisedInOrder() {
-        RequestEvent e1 = new RequestEvent(1, 0);
-        RequestEvent e2 = new RequestEvent(2, 0);
-        RequestEvent e3 = new RequestEvent(3, 0);
+        RequestEvent e1 = new RequestEvent(1);
+        RequestEvent e2 = new RequestEvent(2);
+        RequestEvent e3 = new RequestEvent(3);
 
         Collection<RequestEvent> events = Arrays.asList(e1, e2);
         FIFOCache cache = new FIFOCache(events);
@@ -39,9 +39,9 @@ class FIFOCacheTest {
 
     @Test
     void cacheEvictsOnMiss() {
-        RequestEvent e1 = new RequestEvent(1, 0);
-        RequestEvent e2 = new RequestEvent(2, 0);
-        RequestEvent e3 = new RequestEvent(3, 0);
+        RequestEvent e1 = new RequestEvent(1);
+        RequestEvent e2 = new RequestEvent(2);
+        RequestEvent e3 = new RequestEvent(3);
 
         Collection<RequestEvent> events = Arrays.asList(e1, e2);
         FIFOCache cache = new FIFOCache(events);
@@ -52,10 +52,10 @@ class FIFOCacheTest {
 
     @Test
     void cacheEvictionIsFIFO() {
-        RequestEvent e1 = new RequestEvent(1, 0);
-        RequestEvent e2 = new RequestEvent(2, 0);
-        RequestEvent e3 = new RequestEvent(3, 0);
-        RequestEvent e4 = new RequestEvent(4, 0);
+        RequestEvent e1 = new RequestEvent(1);
+        RequestEvent e2 = new RequestEvent(2);
+        RequestEvent e3 = new RequestEvent(3);
+        RequestEvent e4 = new RequestEvent(4);
 
         Collection<RequestEvent> events = Arrays.asList(e1, e2, e3);
         FIFOCache cache = new FIFOCache(events);

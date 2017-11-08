@@ -15,7 +15,7 @@ public class RequestEvent implements Comparable<RequestEvent> {
     }
 
     private double getInterArrivalTime() {
-        return Math.log(1-rand.nextDouble())/(-itemNo);
+        return Math.log(1-rand.nextDouble()) * (-itemNo);
     }
 
     public void scheduleNewRequest() {
