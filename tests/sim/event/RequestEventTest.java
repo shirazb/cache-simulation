@@ -1,7 +1,6 @@
 package sim.event;
 
 import org.junit.jupiter.api.Test;
-import sim.event.RequestEvent;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
