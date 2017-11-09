@@ -47,7 +47,7 @@ public class CacheSimulation {
 
         RequestEvent e = eventQueue.poll();
         while (e != null && e.getTime() < simTime) {
-            if(cache.checkCache(e)) {
+            if(cache.fetch(e)) {
                 hits++;
             }
             e.scheduleNewRequest();

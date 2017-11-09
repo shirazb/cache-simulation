@@ -1,5 +1,5 @@
 package sim;
 
 public interface Cache {
-    boolean checkCache(RequestEvent e);
+    boolean fetch(RequestEvent e);
 }

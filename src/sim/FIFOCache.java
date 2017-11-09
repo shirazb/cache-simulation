@@ -14,7 +14,7 @@ public class FIFOCache implements Cache {
     }
 
     @Override
-    public boolean checkCache(RequestEvent e) {
+    public boolean fetch(RequestEvent e) {
         boolean cacheHit = cache.contains(e);
         if (!cacheHit) {
             cache.set(indexToEvict, e);

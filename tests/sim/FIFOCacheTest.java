@@ -17,9 +17,9 @@ class FIFOCacheTest {
         Collection<RequestEvent> events = Arrays.asList(e1, e2, e3);
         FIFOCache cache = new FIFOCache(events);
 
-        assertTrue(cache.checkCache(e1));
-        assertTrue(cache.checkCache(e2));
-        assertTrue(cache.checkCache(e3));
+        assertTrue(cache.fetch(e1));
+        assertTrue(cache.fetch(e2));
+        assertTrue(cache.fetch(e3));
     }
 
     @Test
@@ -32,9 +32,9 @@ class FIFOCacheTest {
         FIFOCache cache = new FIFOCache(events);
 
 
-        assertFalse(cache.checkCache(e3));
-        assertTrue(cache.checkCache(e2));
-        assertFalse(cache.checkCache(e1));
+        assertFalse(cache.fetch(e3));
+        assertTrue(cache.fetch(e2));
+        assertFalse(cache.fetch(e1));
     }
 
     @Test
@@ -46,8 +46,8 @@ class FIFOCacheTest {
         Collection<RequestEvent> events = Arrays.asList(e1, e2);
         FIFOCache cache = new FIFOCache(events);
 
-        assertFalse(cache.checkCache(e3));
-        assertFalse(cache.checkCache(e1));
+        assertFalse(cache.fetch(e3));
+        assertFalse(cache.fetch(e1));
     }
 
     @Test
@@ -60,14 +60,14 @@ class FIFOCacheTest {
         Collection<RequestEvent> events = Arrays.asList(e1, e2, e3);
         FIFOCache cache = new FIFOCache(events);
 
-        assertFalse(cache.checkCache(e4));
-        assertFalse(cache.checkCache(e1));
-        assertFalse(cache.checkCache(e2));
-        assertFalse(cache.checkCache(e3));
+        assertFalse(cache.fetch(e4));
+        assertFalse(cache.fetch(e1));
+        assertFalse(cache.fetch(e2));
+        assertFalse(cache.fetch(e3));
 
-        assertTrue(cache.checkCache(e1));
-        assertTrue(cache.checkCache(e2));
-        assertTrue(cache.checkCache(e3));
+        assertTrue(cache.fetch(e1));
+        assertTrue(cache.fetch(e2));
+        assertTrue(cache.fetch(e3));
     }
 
 
