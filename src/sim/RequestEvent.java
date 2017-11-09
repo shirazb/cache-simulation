@@ -54,7 +54,7 @@ public class RequestEvent implements Comparable<RequestEvent> {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        return (int) (itemNo * 1021 + time * 331);
     }
 
 }
