@@ -112,7 +112,7 @@ public class CacheSimulation {
             return "{\n" +
                     "    Hit ratio: " + this.hitRatio + ",\n" +
                     "    Miss rate by miss throughput: " + this.missRateByMissThroughput + ",\n" +
-                    "    Miss rate by hit ratio and sum of all rate parameters: " + this.missRateByHitRatioAndRates + ",\n" +
+                    "    Miss rate by hit ratio times sum of all rate parameters: " + this.missRateByHitRatioAndRates + ",\n" +
                     "}";
         }
 
