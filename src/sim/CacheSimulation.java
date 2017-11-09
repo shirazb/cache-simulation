@@ -28,6 +28,11 @@ public class CacheSimulation {
     public CacheSimulation(final int cacheSize, final int storageSize,
                            EvictionPolicy policy, final double simTime) {
 
+        if (cacheSize > storageSize || simTime < 0) {
+            throw new IllegalArgumentException("Invalid parameters for " +
+                    "simulation");
+        }
+
         this.simTime = simTime;
         this.results = new Results(storageSize);
 
@@ -109,7 +114,12 @@ public class CacheSimulation {
 
         @Override
         public String toString() {
-            return "{\n" +
+            return Double.compare(this.hitRatio, -1) == 0 ?
+                    "{\n" +
+                    "    No events were simulated in the allowed time.\n" +
+                    "}"
+                :
+                    "{\n" +
                     "    Hit ratio: " + this.hitRatio + ",\n" +
                     "    Miss rate by miss throughput: " + this.missRateByMissThroughput + ",\n" +
                     "    Miss rate by hit ratio times sum of all rate parameters: " + this.missRateByHitRatioAndRates + ",\n" +
@@ -141,6 +151,15 @@ public class CacheSimulation {
          * @return The results of the simulation.
          */
         private Results calculate(int hits, int totalReqs, double totalTime) {
+            // If no events were simulated, write invalid results. toString()
+            // will detect this.
+            if (Double.compare(totalTime, 0) == 0) {
+                this.hitRatio = -1;
+                this.missRateByMissThroughput = -1;
+                this.missRateByHitRatioAndRates = -1345435443;
+                return this;
+            }
+
             this.hitRatio = (double) hits / (double) totalReqs;
             this.missRateByMissThroughput = ((double) (totalReqs - hits)) / totalTime;
 
