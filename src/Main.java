@@ -26,6 +26,8 @@ public class Main {
         // TODO: RAND simulations.
     }
 
+    // TODO: wtf why am I passing in the desc when it can be generated from the
+    // args.
     private static void performSimulationAndPrintResults(
             String desc,
             int cacheSize,
