@@ -119,7 +119,7 @@ public class CacheSimulation {
         /**
          * Constructs an object containing the results of the cache
          * simulation for `numItems` items. These results are:
-         * `hitRatio`: The hit ratio, H / T.
+         * `hitRatio`: The hit ratio, H / C.
          * `missRateByMissThroughput`: The miss rate calculated by M / T.
          * `missRateByHitRatioAndRates`: The miss rate calculate by (1 -
          * hitRatio) * (sum of rate parameter of each stored item).
@@ -137,7 +137,8 @@ public class CacheSimulation {
          * Calculates the results and sets their fields. Only after this call
          * can the fields by safely accessed.
          * @param hits number of hits observed.
-         * @param totalReqs totalReqs number of requests observed.
+         * @param totalReqs number of requests observed.
+         * @return The results of the simulation.
          */
         private Results calculate(int hits, int totalReqs, double totalTime) {
             this.hitRatio = (double) hits / (double) totalReqs;
