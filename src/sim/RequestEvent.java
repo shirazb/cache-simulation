@@ -1,21 +1,24 @@
 package sim;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class RequestEvent implements Comparable<RequestEvent> {
 
-    private int itemNo;
-    private Double time;
     private static Random rand = new Random();
 
+    private int itemNo;
+    private Double time;
+
+    /**
+     * Constructs a new RequestEvent. These events represent requests for
+     * resource `itemNo` at a given time, whose inter-arrival time is
+     * exponentially distributed with rate parameter `1 / itemNo`.
+     * @param itemNo The number of the item being requested and the inverse
+     *               of its rate parameter. Denoted `k` in the spec.
+     */
     public RequestEvent(int itemNo) {
         this.itemNo = itemNo;
         this.time = getInterArrivalTime();
-    }
-
-    private double getInterArrivalTime() {
-        return Math.log(1-rand.nextDouble()) * (-itemNo);
     }
 
     /**
@@ -33,11 +36,6 @@ public class RequestEvent implements Comparable<RequestEvent> {
         time += getInterArrivalTime();
     }
 
-    // itemNo is also the rate parameter in the distribution
-    public int getItemNo() {
-        return itemNo;
-    }
-
     public Double getTime() {
         return time;
     }
@@ -49,12 +47,20 @@ public class RequestEvent implements Comparable<RequestEvent> {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof RequestEvent && ((RequestEvent) obj).itemNo == this.itemNo;
+        return obj instanceof RequestEvent && ((RequestEvent) obj).itemNo ==
+                this.itemNo;
     }
 
     @Override
     public int hashCode() {
         return (int) (itemNo * 1021 + time * 331);
+    }
+
+    /**
+     * Samples an exponential distribution with rate parameter `1 / itemNo`.
+     */
+    private double getInterArrivalTime() {
+        return Math.log(1 - rand.nextDouble()) * -itemNo;
     }
 
 }
