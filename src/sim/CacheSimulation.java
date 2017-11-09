@@ -114,7 +114,7 @@ public class CacheSimulation {
 
         @Override
         public String toString() {
-            return Double.compare(this.hitRatio, -1) == 0 ?
+            return this.hitRate < 0 ?
                     "{\n" +
                     "    No events were simulated in the allowed time.\n" +
                     "}"
