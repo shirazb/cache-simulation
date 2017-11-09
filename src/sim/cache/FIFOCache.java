@@ -29,7 +29,7 @@ public class FIFOCache implements Cache {
         // Implements FIFO by keeping track of the index of the last added
         // element, and filling up the cache from index 0 upwards. Thus, to
         // remove an event from the cache and insert e, simply set the
-        // event at that index to be `e`.
+        // event at that index to be `e` and increment indexToEvict.
         if (!cacheHit) {
             cache.set(indexToEvict, e);
             indexToEvict = (indexToEvict + 1) % cache.size();
