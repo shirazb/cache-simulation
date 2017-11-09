@@ -18,7 +18,18 @@ public class RequestEvent implements Comparable<RequestEvent> {
         return Math.log(1-rand.nextDouble()) * (-itemNo);
     }
 
+    /**
+     * Updates the time of the request event to be of the next request for
+     * item `itemNo`.
+     */
     public void scheduleNewRequest() {
+        /*
+            Since possible events consist of requests for a resource at a
+            given time, and there is only one request for one resource
+            scheduled at any time, we can reuse a single RequestEvent object
+            for all the request events for one item. All that needs to be
+            done is to update the time and reinsert it into the queue.
+         */
         time += getInterArrivalTime();
     }
 

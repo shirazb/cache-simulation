@@ -49,25 +49,38 @@ public class CacheSimulation {
         this.cache = Cache.withEvictionPolicy(policy, toCache);
     }
 
+    /**
+     * Performs the simulation, measuring hit ratio and miss rate.
+     */
     public void simulate() {
         double hits = 0;
         double total = 0;
 
         RequestEvent e = eventQueue.poll();
-        while (e != null && e.getTime() < simTime) {
+        double now = 0;
+
+        while (e != null && e.getTime() <= simTime) {
+            now = e.getTime();
+
+            // Check if e in cache, evicting an event and placing e into the
+            // cache if necessary.
             if (cache.fetch(e)) {
                 hits++;
             }
+
+            // Update e's time to be of the next request for it, then re-insert
+            // into queue.
             e.scheduleNewRequest();
             eventQueue.add(e);
-            e = eventQueue.poll();
+
             total++;
+            e = eventQueue.poll();
         }
 
         System.out.println("hits = " + hits);
         System.out.println("total = " + total);
         System.out.println("hit ratio = " + (hits / total));
-        System.out.println("miss rate = " + (total - hits) / simTime);
+        System.out.println("miss rate = " + (total - hits) / now);
 
         double sum = 0;
         for (int i = 0; i < 1000; i++) {
