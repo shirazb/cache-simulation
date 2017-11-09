@@ -3,6 +3,7 @@ package sim;
 import java.util.Collection;
 
 public interface Cache {
+
     boolean fetch(RequestEvent e);
 
     static Cache withEvictionPolicy(EvictionPolicy policy,
@@ -15,4 +16,5 @@ public interface Cache {
                     "Cache for policy: " + policy);
         }
     }
+
 }

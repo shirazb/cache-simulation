@@ -88,7 +88,6 @@ public class CacheSimulation {
         }
 
         System.out.println("miss rate 2 = " + (1 - (hits / total)) * sum);
-
-
     }
+
 }
