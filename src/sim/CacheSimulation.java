@@ -1,5 +1,9 @@
 package sim;
 
+import sim.cache.Cache;
+import sim.cache.EvictionPolicy;
+import sim.event.RequestEvent;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -70,7 +74,7 @@ public class CacheSimulation {
 
             // Update e's time to be of the next request for it, then re-insert
             // into queue.
-            e.scheduleNewRequest();
+            e.scheduleNextRequest();
             eventQueue.add(e);
 
             total++;

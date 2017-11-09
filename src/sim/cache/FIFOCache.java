@@ -1,4 +1,6 @@
-package sim;
+package sim.cache;
+
+import sim.event.RequestEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;

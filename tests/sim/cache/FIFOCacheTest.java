@@ -1,6 +1,8 @@
-package sim;
+package sim.cache;
 
 import org.junit.jupiter.api.Test;
+import sim.cache.FIFOCache;
+import sim.event.RequestEvent;
 
 import java.util.Arrays;
 import java.util.Collection;

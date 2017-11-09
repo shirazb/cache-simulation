@@ -1,4 +1,4 @@
-package sim;
+package sim.event;
 
 import java.util.Random;
 
@@ -25,7 +25,7 @@ public class RequestEvent implements Comparable<RequestEvent> {
      * Updates the time of the request event to be of the next request for
      * item `itemNo`.
      */
-    public void scheduleNewRequest() {
+    public void scheduleNextRequest() {
         /*
             Since possible events consist of requests for a resource at a
             given time, and there is only one request for one resource

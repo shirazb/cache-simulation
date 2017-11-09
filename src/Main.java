@@ -1,5 +1,5 @@
 import sim.CacheSimulation;
-import sim.EvictionPolicy;
+import sim.cache.EvictionPolicy;
 
 public class Main {
     public static void main(String[] args) {
