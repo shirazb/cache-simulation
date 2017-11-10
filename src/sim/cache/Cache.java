@@ -9,5 +9,6 @@ public interface Cache {
     // TODO: Rename to lookUp
     boolean fetch(RequestEvent e);
     void setCache(Collection<RequestEvent> initialCache);
+    String policyType();
 
 }

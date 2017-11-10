@@ -39,4 +39,10 @@ public class FIFOCache implements Cache {
         this.cache = new ArrayList<>(initialCache);
     }
 
+    @Override
+    public String policyType() {
+        return "FIFO";
+    }
+
+
 }

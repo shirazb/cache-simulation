@@ -2,8 +2,8 @@ package sim;
 
 import org.junit.jupiter.api.Test;
 import sim.cache.Cache;
-import sim.cache.EvictionPolicy;
 import sim.cache.FIFOCache;
+import sim.cache.RandomCache;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,21 +13,15 @@ class CacheSimulationTest {
 
     // TODO: How to test hit ratio, or that miss rate is actually correct?
     @Test
-    void testSimulate() {
-        // Test FIFO, m = 10, n = 1000
-        assertMissRatesSimilar(new FIFOCache(), 10, 1000);
-
-        // Test FIFO, m = 50, n = 1000
-        assertMissRatesSimilar(new FIFOCache(), 50, 1000);
-
-        // Test FIFO, m = 100, n = 1000
+    void FIFOCacheMissRateIsAccurate() {
         assertMissRatesSimilar(new FIFOCache(), 100, 1000);
+        assertMissRatesSimilar(new FIFOCache(), 10, 10000);
+    }
 
-        // TODO: Test RAND, m = 10, n = 1000
-
-        // TODO: Test RAND, m = 50, n = 1000
-
-        // TODO: Test RAND, m = 100, n = 1000
+    @Test
+    void randomCacheMissRateIsAccurate() {
+        assertMissRatesSimilar(new RandomCache(), 100, 1000);
+        assertMissRatesSimilar(new RandomCache(), 10, 10000);
     }
 
     private void assertMissRatesSimilar(Cache cacheType, int m, int n) {

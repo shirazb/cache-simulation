@@ -1,7 +1,6 @@
 package sim;
 
 import sim.cache.Cache;
-import sim.cache.EvictionPolicy;
 import sim.event.RequestEvent;
 
 import java.util.LinkedList;

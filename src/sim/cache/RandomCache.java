@@ -27,6 +27,11 @@ public class RandomCache implements Cache {
     }
 
     @Override
+    public String policyType() {
+        return "Random";
+    }
+
+    @Override
     public void setCache(Collection<RequestEvent> initialCache) {
         this.cache = new ArrayList<>(initialCache);
     }
