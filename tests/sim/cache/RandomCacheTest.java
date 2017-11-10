@@ -15,12 +15,13 @@ class RandomCacheTest {
     private final RequestEvent e2 = new RequestEvent(2);
     private final RequestEvent e3 = new RequestEvent(3);
     private final RequestEvent e4 = new RequestEvent(4);
+    private final RandomCache cache = new RandomCache();
 
     @Test
     void cacheIsInitialised() {
 
         Collection<RequestEvent> events = Arrays.asList(e1, e2, e3);
-        RandomCache cache = new RandomCache(events);
+        cache.setCache(events);
 
         assertTrue(cache.fetch(e1));
         assertTrue(cache.fetch(e2));
@@ -32,7 +33,7 @@ class RandomCacheTest {
     void cacheEvictsOnMiss() {
 
         Collection<RequestEvent> events = Collections.singletonList(e1);
-        RandomCache cache = new RandomCache(events);
+        cache.setCache(events);
 
         assertFalse(cache.fetch(e2));
         assertFalse(cache.fetch(e1));
@@ -42,7 +43,7 @@ class RandomCacheTest {
     void cacheEvictionIsRandomAndValid() {
 
         Collection<RequestEvent> events = Arrays.asList(e1, e2, e3);
-        RandomCache cache = new RandomCache(events);
+        cache.setCache(events);
 
         for (int i = 0; i < 10000; i++) {
             int evictIndex = cache.evictIndex();

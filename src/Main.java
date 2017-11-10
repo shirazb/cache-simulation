@@ -1,5 +1,7 @@
 import sim.CacheSimulation;
+import sim.cache.Cache;
 import sim.cache.EvictionPolicy;
+import sim.cache.FIFOCache;
 
 public class Main {
     private static final double SIM_TIME = 50000;
@@ -8,19 +10,19 @@ public class Main {
                 "policy = FIFO, m = 10, n = 1000",
                 10,
                 1000,
-                EvictionPolicy.FIFO
+                new FIFOCache()
         );
         performSimulationAndPrintResults(
                 "policy = FIFO, m = 50, n = 1000",
                 50,
                 1000,
-                EvictionPolicy.FIFO
+                new FIFOCache()
         );
         performSimulationAndPrintResults(
                 "policy = FIFO, m = 100, n = 1000",
                 100,
                 1000,
-                EvictionPolicy.FIFO
+                new FIFOCache()
         );
 
         // TODO: RAND simulations.
@@ -32,12 +34,12 @@ public class Main {
             String desc,
             int cacheSize,
             int storageSize,
-            EvictionPolicy policy)
+            Cache cacheType)
     {
         CacheSimulation sim = new CacheSimulation(
                 cacheSize,
                 storageSize,
-                policy,
+                cacheType,
                 SIM_TIME
         );
 

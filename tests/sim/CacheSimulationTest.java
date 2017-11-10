@@ -1,9 +1,11 @@
 package sim;
 
 import org.junit.jupiter.api.Test;
+import sim.cache.Cache;
 import sim.cache.EvictionPolicy;
+import sim.cache.FIFOCache;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CacheSimulationTest {
     private static final double SIM_TIME = 50000;
@@ -13,13 +15,13 @@ class CacheSimulationTest {
     @Test
     void testSimulate() {
         // Test FIFO, m = 10, n = 1000
-        assertMissRatesSimilar(EvictionPolicy.FIFO, 10, 1000);
+        assertMissRatesSimilar(new FIFOCache(), 10, 1000);
 
         // Test FIFO, m = 50, n = 1000
-        assertMissRatesSimilar(EvictionPolicy.FIFO, 50, 1000);
+        assertMissRatesSimilar(new FIFOCache(), 50, 1000);
 
         // Test FIFO, m = 100, n = 1000
-        assertMissRatesSimilar(EvictionPolicy.FIFO, 100, 1000);
+        assertMissRatesSimilar(new FIFOCache(), 100, 1000);
 
         // TODO: Test RAND, m = 10, n = 1000
 
@@ -28,9 +30,9 @@ class CacheSimulationTest {
         // TODO: Test RAND, m = 100, n = 1000
     }
 
-    private void assertMissRatesSimilar(EvictionPolicy policy, int m, int n) {
-        CacheSimulation fifoSim = new CacheSimulation(m, n, policy, SIM_TIME);
-        CacheSimulation.Results results = fifoSim.simulate();
+    private void assertMissRatesSimilar(Cache cacheType, int m, int n) {
+        CacheSimulation fifoSim = new CacheSimulation(m, n, cacheType, SIM_TIME);
+        SimResults results = fifoSim.simulate();
         double missRate1 = results.getMissRateByMissThroughput();
         double missRate2 = results.getMissRateByHitRatioAndRates();
 

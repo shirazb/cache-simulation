@@ -16,9 +16,6 @@ public class RandomCache implements Cache {
     private List<RequestEvent> cache;
     private Random generator = new Random();
 
-    public RandomCache(Collection<RequestEvent> initialCache) {
-        this.cache = new ArrayList<>(initialCache);
-    }
 
     @Override
     public boolean fetch(RequestEvent e) {
@@ -27,6 +24,11 @@ public class RandomCache implements Cache {
             cache.set(evictIndex(), e);
         }
         return cacheHit;
+    }
+
+    @Override
+    public void setCache(Collection<RequestEvent> initialCache) {
+        this.cache = new ArrayList<>(initialCache);
     }
 
     int evictIndex() {
