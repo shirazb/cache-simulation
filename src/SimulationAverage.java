@@ -1,4 +1,3 @@
-import javafx.util.Builder;
 import sim.CacheSimulation;
 import sim.SimResults;
 import sim.cache.Cache;
@@ -7,7 +6,10 @@ import sim.cache.RandomCache;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 
