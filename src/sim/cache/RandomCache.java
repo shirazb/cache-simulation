@@ -22,7 +22,15 @@ public class RandomCache implements Cache {
 
     @Override
     public boolean fetch(RequestEvent e) {
-        return false;
+        boolean cacheHit = cache.contains(e);
+        if (!cacheHit) {
+            cache.set(evictIndex(), e);
+        }
+        return cacheHit;
+    }
+
+    int evictIndex() {
+        return generator.nextInt(cache.size());
     }
 
 }
