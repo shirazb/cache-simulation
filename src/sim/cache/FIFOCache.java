@@ -11,6 +11,10 @@ public class FIFOCache implements Cache {
     private int indexToEvict = 0;
     private List<RequestEvent> cache;
 
+    public static FIFOCache makeCache() {
+        return new FIFOCache();
+    }
+
     /**
      * Simulates the lookup of `e.itemNo` in the cache. If there is a cache
      * miss, evicts an element according to a FIFO policy and places `e` in

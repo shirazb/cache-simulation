@@ -1,28 +1,42 @@
+import javafx.util.Builder;
 import sim.CacheSimulation;
 import sim.SimResults;
+import sim.cache.Cache;
 import sim.cache.FIFOCache;
+import sim.cache.RandomCache;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 
 public class SimulationAverage {
 
-
-    private static final int NUM_SAMPLES = 12;
+    private static final double CRITICAL_VALUE = 1.96;
+    private static final int NUM_SAMPLES = 100;
     private static final int SIM_TIME = 10000;
 
     public static void main(String[] args) throws Exception {
 
-        final int M = 100;
         final int N = 1000;
 
+
+        simulate(10, N, FIFOCache::makeCache);
+        simulate(50, N, FIFOCache::makeCache);
+        simulate(100, N, FIFOCache::makeCache);
+        simulate(10, N, RandomCache::makeCache);
+        simulate(50, N, RandomCache::makeCache);
+        simulate(100, N, RandomCache::makeCache);
+
+    }
+
+    private static void simulate(int m, int n, Supplier<? extends Cache> cacheSupplier) {
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
         List<Future<SimResults>> futureResults = new LinkedList<>();
 
         for (int i = 0; i < NUM_SAMPLES; i++) {
-            CacheSimulation sim = new CacheSimulation(M, N, new FIFOCache(), SIM_TIME);
+            CacheSimulation sim = new CacheSimulation(m, n, cacheSupplier.get(), SIM_TIME);
             futureResults.add(executor.submit(sim::simulate));
         }
 
@@ -37,36 +51,61 @@ public class SimulationAverage {
             }
         });
 
-        double hitAverage = results.stream().mapToDouble(SimResults::getHitRatio).sum() / NUM_SAMPLES;
-        double missThroughputAverage = results.stream().mapToDouble(SimResults::getMissRateByMissThroughput).sum() / NUM_SAMPLES;
+        double hitMean = results.stream().mapToDouble(SimResults::getHitRatio).sum() / NUM_SAMPLES;
+        double missThroughputMean = results.stream().mapToDouble(SimResults::getMissRateByMissThroughput).sum() / NUM_SAMPLES;
 
-        double hitSD = calculateStandardDeviation(results, hitAverage, SimResults::getHitRatio);
+        double hitSD = calculateStandardDeviation(results, hitMean, SimResults::getHitRatio);
 
         double missThroughputSD = calculateStandardDeviation(
                 results,
-                missThroughputAverage,
+                missThroughputMean,
                 SimResults::getMissRateByMissThroughput
         );
 
+        final double hitIntervalOffset = calculateIntervalOffset(hitSD);
+        final double missIntervalOffset = calculateIntervalOffset(missThroughputSD);
         String outputFIFO = new StringBuilder()
-                .append("Virtual simulation time: " + SIM_TIME)
+                .append("----------------------------------------------------------------")
                 .append(System.lineSeparator())
-                .append("Sample size: " + NUM_SAMPLES)
+//                .append("Virtual simulation time: " + SIM_TIME)
+//                .append(System.lineSeparator())
+
+//                .append("Sample size: " + NUM_SAMPLES)
+//                .append(System.lineSeparator())
+
+                .append("M = " + m)
+                .append(", N = " + n)
+                .append(", Eviction Policy: " + cacheSupplier.get().policyType())
                 .append(System.lineSeparator())
-                .append("N: " + N)
+
+                .append("Hit ratio mean: " + hitMean)
                 .append(System.lineSeparator())
-                .append("M: " + M)
+
+//                .append("Hit ratio SD: " + hitSD)
+//                .append(System.lineSeparator())
+
+                .append("Hit ratio 95% CI: [" +
+                        (hitMean - hitIntervalOffset) + ", " +
+                        (hitMean + hitIntervalOffset) + "]"
+                )
                 .append(System.lineSeparator())
-                .append("Hit average: " + hitAverage)
+
+
+                .append("Miss throughput mean: " + missThroughputMean)
                 .append(System.lineSeparator())
-                .append("Hit SD: " + hitSD)
+
+//                .append("Miss throughput SD: " + missThroughputSD)
+//                .append(System.lineSeparator())
+
+                .append("Miss throughput 95% CI: [" +
+                        (missThroughputMean - missIntervalOffset) + ", " +
+                        (missThroughputMean + missIntervalOffset) + "]"
+                )
                 .append(System.lineSeparator())
-                .append("Miss throughput average: " + missThroughputAverage)
-                .append(System.lineSeparator())
-                .append("Miss throughput SD: " + missThroughputSD)
+                .append("----------------------------------------------------------------")
+
                 .toString();
         System.out.println(outputFIFO);
-
     }
 
     private static double calculateStandardDeviation(List<SimResults> results, double missThroughputAverage, ToDoubleFunction<SimResults> resultFunc) {
@@ -77,5 +116,9 @@ public class SimulationAverage {
                 / NUM_SAMPLES;
         final double variance = (squareMean - Math.pow(missThroughputAverage, 2)) * (NUM_SAMPLES / (NUM_SAMPLES - 1));
         return Math.sqrt(variance);
+    }
+
+    private static double calculateIntervalOffset(double sd) {
+        return CRITICAL_VALUE * sd / Math.sqrt(NUM_SAMPLES);
     }
 }

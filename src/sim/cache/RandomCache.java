@@ -9,10 +9,11 @@ import java.util.Random;
 
 public class RandomCache implements Cache {
 
-    /*
-    Should cache be array or some kind of tree? We need fast random lookup,
-    insertion, and deletion.
-     */
+    public static RandomCache makeCache() {
+        return new RandomCache();
+    }
+
+
     private List<RequestEvent> cache;
     private Random generator = new Random();
 
