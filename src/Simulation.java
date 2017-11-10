@@ -3,7 +3,7 @@ import sim.cache.Cache;
 import sim.cache.FIFOCache;
 import sim.cache.RandomCache;
 
-public class Main {
+public class Simulation {
     private static final double SIM_TIME = 50000;
     public static void main(String[] args) {
 
