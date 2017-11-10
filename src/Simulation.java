@@ -4,18 +4,18 @@ import sim.cache.FIFOCache;
 import sim.cache.RandomCache;
 
 public class Simulation {
-    private static final double SIM_TIME = 50000;
+    private static final double SIM_TIME = 50000000;
     public static void main(String[] args) {
 
         // FIFO
-        performSimulationAndPrintResults(10, 1000, new FIFOCache());
-        performSimulationAndPrintResults(50, 1000, new FIFOCache());
-        performSimulationAndPrintResults(100, 1000, new FIFOCache());
+//        performSimulationAndPrintResults(10, 1000, new FIFOCache());
+//        performSimulationAndPrintResults(50, 1000, new FIFOCache());
+//        performSimulationAndPrintResults(100, 1000, new FIFOCache());
 
         // Random
-        performSimulationAndPrintResults(10, 1000, new RandomCache());
-        performSimulationAndPrintResults(50, 1000, new RandomCache());
-        performSimulationAndPrintResults(100, 1000, new RandomCache());
+//        performSimulationAndPrintResults(10, 1000, new RandomCache());
+//        performSimulationAndPrintResults(50, 1000, new RandomCache());
+        performSimulationAndPrintResults(2, 3, new RandomCache());
 
     }
 
