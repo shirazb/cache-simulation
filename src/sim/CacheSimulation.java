@@ -9,6 +9,7 @@ import java.util.PriorityQueue;
 
 public class CacheSimulation {
 
+    private static final double INITIALISATION_TIME = 50;
     private double simTime;
     private Cache cache;
     private PriorityQueue<RequestEvent> eventQueue = new PriorityQueue<>();
@@ -27,9 +28,8 @@ public class CacheSimulation {
     public CacheSimulation(final int cacheSize, final int storageSize,
                            Cache cache, final double simTime) {
 
-        if (simTime < 0) {
-            throw new IllegalArgumentException("Invalid parameters for " +
-                    "simulation");
+        if (simTime < INITIALISATION_TIME) {
+            throw new IllegalArgumentException("simulation time too short. Try sim time > 1000");
         }
 
         this.simTime = simTime;
@@ -75,8 +75,11 @@ public class CacheSimulation {
 
             // Check if e in cache, evicting an event and placing e into the
             // cache if necessary.
-            if (cache.fetch(e)) {
-                hits++;
+            if (now > INITIALISATION_TIME) {
+                if (cache.fetch(e)) {
+                    hits++;
+                }
+                total++;
             }
 
             // Update e's time to be of the next request for it, then re-insert
@@ -84,11 +87,10 @@ public class CacheSimulation {
             e.scheduleNextRequest();
             eventQueue.add(e);
 
-            total++;
             e = eventQueue.poll();
         }
 
-        return results.calculate(hits, total, now);
+        return results.calculate(hits, total, now - INITIALISATION_TIME);
     }
 
 }

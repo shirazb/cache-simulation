@@ -10,7 +10,7 @@ public class SimulationAverage {
     public static void main(String[] args) throws Exception {
 
         final int simTime = 10000;
-        final int numSamples = 100;
+        final int numSamples = 50;
         final int M = 100;
         final int N = 1000;
 

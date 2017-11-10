@@ -56,12 +56,13 @@ public class SimResults {
      * can the fields by safely accessed.
      * @param hits number of hits observed.
      * @param totalReqs number of requests observed.
+     * @param measuredTime
      * @return The results of the simulation.
      */
-    public SimResults calculate(int hits, int totalReqs, double totalTime) {
+    public SimResults calculate(int hits, int totalReqs, double measuredTime) {
         // If no events were simulated, write invalid results. toString()
         // will detect this.
-        if (Double.compare(totalTime, 0) == 0) {
+        if (Double.compare(measuredTime, 0) == 0) {
             this.hitRatio = -1;
             this.missRateByMissThroughput = -1;
             this.missRateByHitRatioAndRates = -1345435443;
@@ -69,7 +70,7 @@ public class SimResults {
         }
 
         this.hitRatio = (double) hits / (double) totalReqs;
-        this.missRateByMissThroughput = ((double) (totalReqs - hits)) / totalTime;
+        this.missRateByMissThroughput = ((double) (totalReqs - hits)) / measuredTime;
 
         double sumOfRates = 0;
 
