@@ -24,7 +24,6 @@ public class CacheSimulation {
      * @param simTime The virtual time limit of the simulation. This should
      *                be large enough to allow all measurements to stabilise.
      */
-    // TODO: How to cope with initialisation period?
     public CacheSimulation(final int cacheSize, final int storageSize,
                            Cache cache, final double simTime) {
 

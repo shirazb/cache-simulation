@@ -16,13 +16,15 @@ import java.util.function.ToDoubleFunction;
 public class SimulationAverage {
 
     private static final double CRITICAL_VALUE = 1.96;
-    private static final int NUM_SAMPLES = 100;
-    private static final int SIM_TIME = 10000;
+    private static final int NUM_SAMPLES = 200;
+    private static final int SIM_TIME = 20000;
 
     public static void main(String[] args) throws Exception {
-
         final int N = 1000;
 
+        System.out.println("Virtual simulation time: " + SIM_TIME);
+        System.out.println("Sample size: " + NUM_SAMPLES);
+        System.out.println("Critical Value: z = " + CRITICAL_VALUE);
 
         simulate(10, N, FIFOCache::makeCache);
         simulate(50, N, FIFOCache::makeCache);
@@ -30,7 +32,6 @@ public class SimulationAverage {
         simulate(10, N, RandomCache::makeCache);
         simulate(50, N, RandomCache::makeCache);
         simulate(100, N, RandomCache::makeCache);
-
     }
 
     private static void simulate(int m, int n, Supplier<? extends Cache> cacheSupplier) {
@@ -69,11 +70,6 @@ public class SimulationAverage {
         String outputFIFO = new StringBuilder()
                 .append("----------------------------------------------------------------")
                 .append(System.lineSeparator())
-//                .append("Virtual simulation time: " + SIM_TIME)
-//                .append(System.lineSeparator())
-
-//                .append("Sample size: " + NUM_SAMPLES)
-//                .append(System.lineSeparator())
 
                 .append("M = " + m)
                 .append(", N = " + n)
@@ -83,21 +79,14 @@ public class SimulationAverage {
                 .append("Hit ratio mean: " + hitMean)
                 .append(System.lineSeparator())
 
-//                .append("Hit ratio SD: " + hitSD)
-//                .append(System.lineSeparator())
-
                 .append("Hit ratio 95% CI: [" +
                         (hitMean - hitIntervalOffset) + ", " +
                         (hitMean + hitIntervalOffset) + "]"
                 )
                 .append(System.lineSeparator())
 
-
                 .append("Miss throughput mean: " + missThroughputMean)
                 .append(System.lineSeparator())
-
-//                .append("Miss throughput SD: " + missThroughputSD)
-//                .append(System.lineSeparator())
 
                 .append("Miss throughput 95% CI: [" +
                         (missThroughputMean - missIntervalOffset) + ", " +

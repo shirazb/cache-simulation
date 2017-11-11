@@ -5,7 +5,6 @@ import java.util.Random;
 public class RequestEvent implements Comparable<RequestEvent> {
 
     private static Random rand = new Random();
-
     private int itemNo;
     private Double time;
 
@@ -36,6 +35,13 @@ public class RequestEvent implements Comparable<RequestEvent> {
         time += getInterArrivalTime();
     }
 
+    /**
+     * Samples an exponential distribution with rate parameter `1 / itemNo`.
+     */
+    private double getInterArrivalTime() {
+        return Math.log(1 - rand.nextDouble()) * -itemNo;
+    }
+
     public Double getTime() {
         return time;
     }
@@ -54,13 +60,6 @@ public class RequestEvent implements Comparable<RequestEvent> {
     @Override
     public int hashCode() {
         return (int) (itemNo * 1021 + time * 331);
-    }
-
-    /**
-     * Samples an exponential distribution with rate parameter `1 / itemNo`.
-     */
-    private double getInterArrivalTime() {
-        return Math.log(1 - rand.nextDouble()) * -itemNo;
     }
 
 }
