@@ -74,8 +74,9 @@ public class CacheSimulation {
 
             // Check if e in cache, evicting an event and placing e into the
             // cache if necessary.
+            boolean cacheHit = cache.fetch(e);
             if (now > INITIALISATION_TIME) {
-                if (cache.fetch(e)) {
+                if (cacheHit) {
                     hits++;
                 }
                 total++;
